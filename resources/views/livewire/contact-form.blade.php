@@ -1,5 +1,6 @@
 <div class="w-full max-w-2xl mx-auto">
     <form wire:submit="submit" class="space-y-6">
+        @error('rate_limit') <div class="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">{{ $message }}</div> @enderror
         <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Name</label>
             <input type="text" wire:model="name" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent">

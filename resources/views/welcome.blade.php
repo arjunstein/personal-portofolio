@@ -1,6 +1,7 @@
 @php
     $profile = \App\Models\Profile::first();
     $skills = \App\Models\Skill::orderBy('sort_order')->get()->groupBy('category');
+    $experiences = \App\Models\Experience::orderBy('sort_order')->get();
     $projects = \App\Models\Project::where('is_featured', true)->orderBy('sort_order')->get();
 @endphp
 <!DOCTYPE html>
@@ -25,10 +26,10 @@
                     <a href="#hero" @click.prevent="scrollTo('hero')" :class="activeSection === 'hero' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Home</a>
                     <a href="#about" @click.prevent="scrollTo('about')" :class="activeSection === 'about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">About</a>
                     <a href="#skills" @click.prevent="scrollTo('skills')" :class="activeSection === 'skills' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Skills</a>
+                    <a href="#experiences" @click.prevent="scrollTo('experiences')" :class="activeSection === 'experiences' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Experience</a>
                     <a href="#projects" @click.prevent="scrollTo('projects')" :class="activeSection === 'projects' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Projects</a>
                     <a href="#contact" @click.prevent="scrollTo('contact')" :class="activeSection === 'contact' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Contact</a>
                 </div>
-                <a href="{{ auth()->check() ? route('dashboard.index') : url('/login') }}" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">Dashboard</a>
             </div>
         </div>
     </nav>
@@ -36,18 +37,18 @@
     <!-- Hero Section -->
     <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-indigo-900/20"></div>
-        <div class="max-w-7xl mx-auto px-6 py-20 text-center relative z-10">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center relative z-10 reveal is-visible" style="--reveal-delay: 100ms;">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
                 <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">
                     {{ $profile->name ?? 'Your Name' }}
                 </span>
             </h1>
             <p class="text-2xl md:text-3xl text-gray-300 mb-8">{{ $profile->tagline ?? 'Full-Stack Developer' }}</p>
-            <div class="flex gap-4 justify-center">
-                <a href="#projects" @click.prevent="scrollTo('projects')" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 transition">
+            <div class="flex gap-4 justify-center animate-float-soft">
+                <a href="#projects" @click.prevent="scrollTo('projects')" class="interactive-lift px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 transition">
                     View My Work
                 </a>
-                <a href="#contact" @click.prevent="scrollTo('contact')" class="px-8 py-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">
+                <a href="#contact" @click.prevent="scrollTo('contact')" class="interactive-lift px-8 py-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">
                     Get In Touch
                 </a>
             </div>
@@ -55,7 +56,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="min-h-screen flex items-center py-20">
+    <section id="about" class="min-h-screen flex items-center py-20 reveal" style="--reveal-delay: 120ms;">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">About Me</h2>
             <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -118,12 +119,12 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="min-h-screen flex items-center py-20 bg-gray-800/30">
+    <section id="skills" class="min-h-screen flex items-center py-20 bg-gray-800/30 reveal" style="--reveal-delay: 120ms;">
         <div class="max-w-7xl mx-auto px-6 w-full">
             <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">Skills & Expertise</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($skills as $category => $categorySkills)
-                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <div class="interactive-lift bg-gray-800 rounded-xl p-6 border border-gray-700">
                     <h3 class="text-2xl font-semibold mb-6 text-purple-400">{{ $category }}</h3>
                     <div class="space-y-4">
                         @foreach($categorySkills as $skill)
@@ -144,13 +145,38 @@
         </div>
     </section>
 
+    <!-- Experience Section -->
+    <section id="experiences" class="min-h-screen flex items-center py-20 reveal" style="--reveal-delay: 120ms;">
+        <div class="max-w-5xl mx-auto px-6 w-full">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">Work Experience</h2>
+            <div class="space-y-6">
+                @forelse($experiences as $experience)
+                <div class="interactive-lift rounded-2xl border border-gray-700 bg-gray-800/70 p-6 md:p-8">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-white">{{ $experience->position }}</h3>
+                            <p class="mt-1 text-lg text-purple-400">{{ $experience->company }}</p>
+                        </div>
+                        <div class="rounded-full bg-gray-700 px-4 py-2 text-sm text-gray-300">
+                            {{ $experience->start_date?->format('M Y') }} - {{ $experience->end_date?->format('M Y') ?? 'Present' }}
+                        </div>
+                    </div>
+                    <p class="mt-4 leading-relaxed text-gray-300">{{ $experience->description }}</p>
+                </div>
+                @empty
+                <div class="text-center text-gray-500 py-12">No experiences yet</div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
     <!-- Projects Section -->
-    <section id="projects" class="min-h-screen flex items-center py-20">
+    <section id="projects" class="min-h-screen flex items-center py-20 reveal" style="--reveal-delay: 120ms;">
         <div class="max-w-7xl mx-auto px-6 w-full">
             <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">Featured Projects</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($projects as $project)
-                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-purple-500 transition group">
+                <div class="interactive-lift bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-purple-500 transition group">
                     @if($project->image)
                     <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
                     @else
@@ -190,7 +216,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="min-h-screen flex items-center py-20 bg-gray-800/30">
+    <section id="contact" class="min-h-screen flex items-center py-20 bg-gray-800/30 reveal" style="--reveal-delay: 120ms;">
         <div class="max-w-7xl mx-auto px-6 w-full">
             <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">Get In Touch</h2>
             <div class="max-w-2xl mx-auto">
@@ -238,10 +264,11 @@
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
                                 this.activeSection = entry.target.id;
+                                entry.target.classList.add('is-visible');
                                 window.history.replaceState(null, '', `#${entry.target.id}`);
                             }
                         });
-                    }, { threshold: 0.5 });
+                    }, { threshold: 0.25 });
                     
                     document.querySelectorAll('section[id]').forEach(section => {
                         observer.observe(section);
