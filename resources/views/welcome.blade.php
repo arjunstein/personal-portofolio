@@ -1,6 +1,7 @@
 @php
     $profile = \App\Models\Profile::first();
     $skills = \App\Models\Skill::orderBy('sort_order')->get()->groupBy('category');
+    $experiences = \App\Models\Experience::orderBy('sort_order')->get();
     $projects = \App\Models\Project::where('is_featured', true)->orderBy('sort_order')->get();
 @endphp
 <!DOCTYPE html>
@@ -25,6 +26,7 @@
                     <a href="#hero" @click.prevent="scrollTo('hero')" :class="activeSection === 'hero' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Home</a>
                     <a href="#about" @click.prevent="scrollTo('about')" :class="activeSection === 'about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">About</a>
                     <a href="#skills" @click.prevent="scrollTo('skills')" :class="activeSection === 'skills' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Skills</a>
+                    <a href="#experiences" @click.prevent="scrollTo('experiences')" :class="activeSection === 'experiences' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Experience</a>
                     <a href="#projects" @click.prevent="scrollTo('projects')" :class="activeSection === 'projects' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Projects</a>
                     <a href="#contact" @click.prevent="scrollTo('contact')" :class="activeSection === 'contact' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Contact</a>
                 </div>
@@ -140,6 +142,31 @@
                     </div>
                 </div>
                 @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experiences" class="min-h-screen flex items-center py-20">
+        <div class="max-w-5xl mx-auto px-6 w-full">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">Work Experience</h2>
+            <div class="space-y-6">
+                @forelse($experiences as $experience)
+                <div class="rounded-2xl border border-gray-700 bg-gray-800/70 p-6 md:p-8">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-white">{{ $experience->position }}</h3>
+                            <p class="mt-1 text-lg text-purple-400">{{ $experience->company }}</p>
+                        </div>
+                        <div class="rounded-full bg-gray-700 px-4 py-2 text-sm text-gray-300">
+                            {{ $experience->start_date?->format('M Y') }} - {{ $experience->end_date?->format('M Y') ?? 'Present' }}
+                        </div>
+                    </div>
+                    <p class="mt-4 leading-relaxed text-gray-300">{{ $experience->description }}</p>
+                </div>
+                @empty
+                <div class="text-center text-gray-500 py-12">No experiences yet</div>
+                @endforelse
             </div>
         </div>
     </section>
