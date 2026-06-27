@@ -6,6 +6,7 @@ use App\Livewire\Skills;
 use App\Livewire\Experiences;
 use App\Livewire\Messages;
 use App\Livewire\Profile;
+use App\Livewire\Account;
 use App\Livewire\Actions\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')
     Route::get('/messages', Messages\Index::class)->name('messages.index');
     
     Route::get('/profile', Profile\Edit::class)->name('profile.edit');
+
+    Route::get('/account', Account\Settings::class)->name('account.settings');
 });
 
 require __DIR__.'/auth.php';

@@ -4,7 +4,7 @@
         <h1 class="text-3xl font-bold mt-4">Edit Project</h1>
     </div>
 
-    <form wire:submit="save" class="max-w-3xl space-y-6">
+    <form wire:submit="save" class="max-w-3xl mx-auto space-y-6">
         <div class="bg-gray-800 rounded-lg border border-gray-700 p-6 space-y-6">
             <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2">Title</label>

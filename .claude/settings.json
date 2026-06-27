@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "read -r json; f=$(printf '%s' \"$json\" | jq -r '.tool_input.file_path // .tool_response.filePath // empty'); case \"$f\" in */resources/js/app.js|*/resources/css/app.css) docker compose exec node npm run build ;; esac 2>/dev/null || true",
+            "statusMessage": "Building frontend assets..."
+          }
+        ]
+      }
+    ]
+  }
+}

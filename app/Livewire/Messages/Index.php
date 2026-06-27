@@ -8,6 +8,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public ?Message $selectedMessage = null;
+    public ?int $messageToDelete = null;
 
     public function view(Message $message)
     {
@@ -24,11 +25,33 @@ class Index extends Component
         $this->dispatch('notify', message: 'Message marked as unread.');
     }
 
-    public function delete(Message $message)
+    public function confirmDelete(int $messageId): void
     {
+        $this->messageToDelete = $messageId;
+        $this->dispatch('open-modal', name: 'confirm-message-deletion');
+    }
+
+    public function deleteConfirmed(): void
+    {
+        $message = Message::find($this->messageToDelete);
+
+        if (! $message) {
+            $this->messageToDelete = null;
+
+            return;
+        }
+
         $message->delete();
         $this->selectedMessage = null;
+        $this->messageToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-message-deletion');
         $this->dispatch('notify', message: 'Message deleted successfully!');
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->messageToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-message-deletion');
     }
 
     public function closeDetail()

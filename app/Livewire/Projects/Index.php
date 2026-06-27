@@ -11,14 +11,38 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+    public ?int $projectToDelete = null;
 
-    public function delete(Project $project)
+    public function confirmDelete(int $projectId): void
     {
+        $this->projectToDelete = $projectId;
+        $this->dispatch('open-modal', name: 'confirm-project-deletion');
+    }
+
+    public function deleteConfirmed(): void
+    {
+        $project = Project::find($this->projectToDelete);
+
+        if (! $project) {
+            $this->projectToDelete = null;
+
+            return;
+        }
+
         if ($project->image) {
             \Storage::disk('public')->delete($project->image);
         }
+
         $project->delete();
+        $this->projectToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-project-deletion');
         $this->dispatch('notify', message: 'Project deleted successfully!');
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->projectToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-project-deletion');
     }
 
     public function render()

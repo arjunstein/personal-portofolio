@@ -9,6 +9,7 @@ class Index extends Component
 {
     public bool $showForm = false;
     public ?Experience $editingExperience = null;
+    public ?int $experienceToDelete = null;
     public string $company = '';
     public string $position = '';
     public string $startDate = '';
@@ -65,10 +66,32 @@ class Index extends Component
         $this->resetInput();
     }
 
-    public function delete(Experience $experience)
+    public function confirmDelete(int $experienceId): void
     {
+        $this->experienceToDelete = $experienceId;
+        $this->dispatch('open-modal', name: 'confirm-experience-deletion');
+    }
+
+    public function deleteConfirmed(): void
+    {
+        $experience = Experience::find($this->experienceToDelete);
+
+        if (! $experience) {
+            $this->experienceToDelete = null;
+
+            return;
+        }
+
         $experience->delete();
+        $this->experienceToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-experience-deletion');
         $this->dispatch('notify', message: 'Experience deleted successfully!');
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->experienceToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-experience-deletion');
     }
 
     public function resetInput()
