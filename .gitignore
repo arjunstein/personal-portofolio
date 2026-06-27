@@ -15,6 +15,5 @@ auth.json
 database/database.sqlite
 .DS_Store
 Thumbs.db
-public/build
 *.log
 temp/
