@@ -9,6 +9,7 @@ class Index extends Component
 {
     public bool $showForm = false;
     public ?Skill $editingSkill = null;
+    public ?int $skillToDelete = null;
     public string $name = '';
     public int $level = 50;
     public string $category = '';
@@ -64,10 +65,32 @@ class Index extends Component
         $this->resetInput();
     }
 
-    public function delete(Skill $skill)
+    public function confirmDelete(int $skillId): void
     {
+        $this->skillToDelete = $skillId;
+        $this->dispatch('open-modal', name: 'confirm-skill-deletion');
+    }
+
+    public function deleteConfirmed(): void
+    {
+        $skill = Skill::find($this->skillToDelete);
+
+        if (! $skill) {
+            $this->skillToDelete = null;
+
+            return;
+        }
+
         $skill->delete();
+        $this->skillToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-skill-deletion');
         $this->dispatch('notify', message: 'Skill deleted successfully!');
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->skillToDelete = null;
+        $this->dispatch('close-modal', name: 'confirm-skill-deletion');
     }
 
     public function moveUp(Skill $skill)
