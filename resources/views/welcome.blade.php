@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-gray-900 text-gray-100" x-data="portfolio()" x-init="init()">
+<body class="bg-gray-900 text-gray-100" x-data="portfolio()" x-init="init()" x-bind:class="{ 'overflow-hidden': mobileMenuOpen }">
     
     <!-- Navigation -->
     <nav x-ref="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
@@ -22,15 +22,43 @@
                 <a href="#hero" @click.prevent="scrollTo('hero')" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                     {{ $profile->name ?? 'Portfolio' }}
                 </a>
+                <!-- Desktop nav -->
                 <div class="hidden md:flex gap-8">
-                    <a href="#hero" @click.prevent="scrollTo('hero')" :class="activeSection === 'hero' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Home</a>
                     <a href="#about" @click.prevent="scrollTo('about')" :class="activeSection === 'about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">About</a>
                     <a href="#skills" @click.prevent="scrollTo('skills')" :class="activeSection === 'skills' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Skills</a>
                     <a href="#experiences" @click.prevent="scrollTo('experiences')" :class="activeSection === 'experiences' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Experience</a>
                     <a href="#projects" @click.prevent="scrollTo('projects')" :class="activeSection === 'projects' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Projects</a>
                     <a href="#contact" @click.prevent="scrollTo('contact')" :class="activeSection === 'contact' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">Contact</a>
                 </div>
+                <!-- Mobile hamburger -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-gray-300 hover:text-white">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div x-show="mobileMenuOpen" x-transition.opacity class="fixed inset-0 bg-black/60 z-40 md:hidden" @click="mobileMenuOpen = false"></div>
+    <nav x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="fixed top-0 right-0 h-full w-72 bg-gray-900 border-l border-gray-800 z-50 md:hidden flex flex-col">
+        <div class="flex justify-end p-4">
+            <button @click="mobileMenuOpen = false" class="p-2 text-gray-300 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="flex flex-col gap-2 px-6">
+            <a href="#about" @click.prevent="scrollTo('about'); mobileMenuOpen = false" :class="activeSection === 'about' ? 'text-purple-400 bg-gray-800' : 'text-gray-300 hover:text-white'" class="px-4 py-3 rounded-lg transition">About</a>
+            <a href="#skills" @click.prevent="scrollTo('skills'); mobileMenuOpen = false" :class="activeSection === 'skills' ? 'text-purple-400 bg-gray-800' : 'text-gray-300 hover:text-white'" class="px-4 py-3 rounded-lg transition">Skills</a>
+            <a href="#experiences" @click.prevent="scrollTo('experiences'); mobileMenuOpen = false" :class="activeSection === 'experiences' ? 'text-purple-400 bg-gray-800' : 'text-gray-300 hover:text-white'" class="px-4 py-3 rounded-lg transition">Experience</a>
+            <a href="#projects" @click.prevent="scrollTo('projects'); mobileMenuOpen = false" :class="activeSection === 'projects' ? 'text-purple-400 bg-gray-800' : 'text-gray-300 hover:text-white'" class="px-4 py-3 rounded-lg transition">Projects</a>
+            <a href="#contact" @click.prevent="scrollTo('contact'); mobileMenuOpen = false" :class="activeSection === 'contact' ? 'text-purple-400 bg-gray-800' : 'text-gray-300 hover:text-white'" class="px-4 py-3 rounded-lg transition">Contact</a>
         </div>
     </nav>
 
@@ -44,7 +72,7 @@
                 </span>
             </h1>
             <p class="text-2xl md:text-3xl text-gray-300 mb-8">{{ $profile->tagline ?? 'Full-Stack Developer' }}</p>
-            <div class="flex gap-4 justify-center animate-float-soft">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-float-soft">
                 <a href="#projects" @click.prevent="scrollTo('projects')" class="interactive-lift px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 transition">
                     View My Work
                 </a>
@@ -259,6 +287,7 @@
         function portfolio() {
             return {
                 activeSection: 'hero',
+                mobileMenuOpen: false,
                 init() {
                     const observer = new IntersectionObserver(entries => {
                         entries.forEach(entry => {

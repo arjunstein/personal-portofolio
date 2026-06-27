@@ -7,9 +7,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="bg-gray-900 text-gray-100" x-data="{ sidebarOpen: false }">
+    <!-- Mobile backdrop -->
+    <div x-show="sidebarOpen" x-transition.opacity @click="sidebarOpen = false" class="fixed inset-0 bg-black/60 z-30 md:hidden"></div>
+
     <div class="flex h-screen overflow-hidden">
-        <aside class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col">
+        <!-- Sidebar -->
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed md:relative z-40 w-64 bg-gray-800 border-r border-gray-700 flex flex-col transition-transform duration-300 md:translate-x-0">
             <div class="p-6 border-b border-gray-700">
                 <h1 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                     Portfolio Admin
@@ -121,7 +125,16 @@
         </x-modal>
 
         <main class="flex-1 overflow-y-auto">
-            <div class="p-8">
+            <!-- Mobile top bar -->
+            <div class="md:hidden p-4 border-b border-gray-700 flex items-center gap-3">
+                <button @click="sidebarOpen = true" class="p-2 text-gray-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <span class="text-lg font-semibold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Portfolio Admin</span>
+            </div>
+            <div class="p-4 md:p-8">
                 {{ $slot }}
             </div>
         </main>

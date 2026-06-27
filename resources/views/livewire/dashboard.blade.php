@@ -64,7 +64,8 @@
 
     <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
         <h2 class="text-xl font-semibold mb-4">Recent Messages</h2>
-        <div class="overflow-x-auto">
+        <!-- Desktop table -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="text-left text-gray-400 border-b border-gray-700">
@@ -97,6 +98,29 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <!-- Mobile cards -->
+        <div class="space-y-3 md:hidden">
+            @forelse($recentMessages as $message)
+            <div class="bg-gray-700/50 rounded-lg p-4 space-y-2">
+                <div class="flex justify-between items-start">
+                    <span class="font-medium text-white">{{ $message->name }}</span>
+                    @if($message->read_at)
+                    <span class="text-green-400 text-sm">Read</span>
+                    @else
+                    <span class="text-purple-400 text-sm font-semibold">Unread</span>
+                    @endif
+                </div>
+                <p class="text-sm text-gray-300">{{ $message->subject }}</p>
+                <div class="flex justify-between text-xs text-gray-400">
+                    <span>{{ $message->email }}</span>
+                    <span>{{ $message->created_at->diffForHumans() }}</span>
+                </div>
+            </div>
+            @empty
+            <p class="text-center text-gray-500 py-8">No messages yet</p>
+            @endforelse
         </div>
     </div>
 </div>
