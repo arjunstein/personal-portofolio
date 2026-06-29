@@ -19,9 +19,6 @@
     <nav x-ref="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <a href="#hero" @click.prevent="scrollTo('hero')" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                    {{ $profile->name ?? 'Portfolio' }}
-                </a>
                 <!-- Desktop nav -->
                 <div class="hidden md:flex gap-8">
                     <a href="#about" @click.prevent="scrollTo('about')" :class="activeSection === 'about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'" class="transition">About</a>
