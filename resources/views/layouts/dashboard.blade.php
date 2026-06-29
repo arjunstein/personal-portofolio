@@ -13,7 +13,7 @@
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed md:relative z-40 w-64 bg-gray-800 border-r border-gray-700 flex flex-col transition-transform duration-300 md:translate-x-0">
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 md:relative md:inset-auto z-40 w-64 h-screen md:h-auto bg-gray-800 border-r border-gray-700 flex flex-col transition-transform duration-300 md:translate-x-0">
             <div class="p-6 border-b border-gray-700">
                 <h1 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                     Portfolio Admin
