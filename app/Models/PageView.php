@@ -23,7 +23,7 @@ class PageView extends Model
     {
         $days = collect(range(6, 0))->map(fn ($i) => now()->subDays($i)->format('Y-m-d'));
 
-        $counts = static::selectRaw('DATE(created_at) as date, COUNT(*) as views, COUNT(DISTINCT ip_address) as visitors')
+        $counts = static::selectRaw('DATE(created_at) as date, COUNT(*) as views')
             ->where('created_at', '>=', now()->subDays(6)->startOfDay())
             ->groupBy('date')
             ->pluck('views', 'date');
@@ -33,15 +33,5 @@ class PageView extends Model
             'label' => date('D', strtotime($date)),
             'views' => $counts[$date] ?? 0,
         ])->values()->all();
-    }
-
-    public static function topPages(int $limit = 5): array
-    {
-        return static::selectRaw('path, COUNT(*) as views')
-            ->groupBy('path')
-            ->orderByDesc('views')
-            ->limit($limit)
-            ->get()
-            ->toArray();
     }
 }
