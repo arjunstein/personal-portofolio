@@ -17,6 +17,7 @@ class Edit extends Component
     public $photo = null;
     public string $email = '';
     public string $phone = '';
+    public string $whatsapp = '';
     public string $location = '';
     public string $github = '';
     public string $linkedin = '';
@@ -30,6 +31,7 @@ class Edit extends Component
         'photo' => 'nullable|image|max:2048',
         'email' => 'nullable|email',
         'phone' => 'nullable|string',
+        'whatsapp' => 'nullable|string',
         'location' => 'nullable|string',
         'github' => 'nullable|url',
         'linkedin' => 'nullable|url',
@@ -47,6 +49,7 @@ class Edit extends Component
             $this->bio = $this->profile->bio ?? '';
             $this->email = $this->profile->email ?? '';
             $this->phone = $this->profile->phone ?? '';
+            $this->whatsapp = $this->profile->whatsapp ?? '';
             $this->location = $this->profile->location ?? '';
             $this->github = $this->profile->github ?? '';
             $this->linkedin = $this->profile->linkedin ?? '';
@@ -65,6 +68,7 @@ class Edit extends Component
             'bio' => $this->bio ?: null,
             'email' => $this->email ?: null,
             'phone' => $this->phone ?: null,
+            'whatsapp' => $this->whatsapp ?: null,
             'location' => $this->location ?: null,
             'github' => $this->github ?: null,
             'linkedin' => $this->linkedin ?: null,

@@ -45,6 +45,12 @@
                     <label class="block text-sm font-medium text-gray-300 mb-2">Phone</label>
                     <input type="text" wire:model="phone" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
                 </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">WhatsApp</label>
+                    <input type="text" wire:model="whatsapp" placeholder="628123456789" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
+                    <p class="text-xs text-gray-500 mt-1">Format: kode negara + nomor, tanpa + atau spasi (contoh: 628123456789)</p>
+                </div>
             </div>
 
             <div>
