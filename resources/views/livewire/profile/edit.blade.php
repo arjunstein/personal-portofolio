@@ -66,8 +66,8 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Twitter</label>
-                        <input type="url" wire:model="twitter" placeholder="https://twitter.com/username" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">X</label>
+                        <input type="url" wire:model="twitter" placeholder="https://x.com/username" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
                     </div>
 
                     <div>
