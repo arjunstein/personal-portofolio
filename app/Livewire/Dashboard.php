@@ -26,7 +26,6 @@ class Dashboard extends Component
             'totalViews'       => PageView::count(),
             'uniqueVisitors'   => PageView::uniqueVisitors(),
             'viewsToday'       => PageView::whereDate('created_at', today())->count(),
-            'topPages'         => PageView::topPages(5),
             'chartLabels'      => json_encode(array_column($chartData, 'label')),
             'chartViews'       => json_encode(array_column($chartData, 'views')),
         ])->layout('layouts.dashboard');

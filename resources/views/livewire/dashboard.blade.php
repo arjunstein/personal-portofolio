@@ -78,29 +78,9 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <!-- Chart 7 hari -->
-        <div class="lg:col-span-2 bg-gray-800 rounded-lg border border-gray-700 p-6">
-            <h2 class="text-xl font-semibold mb-4">Visitors (7 Days)</h2>
-            <canvas id="visitorChart" height="100"></canvas>
-        </div>
-
-        <!-- Top pages -->
-        <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
-            <h2 class="text-xl font-semibold mb-4">Top Pages</h2>
-            @if(count($topPages) > 0)
-            <div class="space-y-3">
-                @foreach($topPages as $page)
-                <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-300 truncate mr-2">/{{ $page['path'] ?: '' }}</span>
-                    <span class="text-sm font-semibold text-purple-400 shrink-0">{{ number_format($page['views']) }}</span>
-                </div>
-                @endforeach
-            </div>
-            @else
-            <p class="text-gray-500 text-sm">No data yet</p>
-            @endif
-        </div>
+    <div class="bg-gray-800 rounded-lg border border-gray-700 p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Visitors (7 Days)</h2>
+        <canvas id="visitorChart" height="80"></canvas>
     </div>
 
     <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
