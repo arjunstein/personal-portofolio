@@ -63,7 +63,7 @@
     </div>
 
     <!-- Analytics Section -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-2 gap-6 mb-8">
         <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
             <p class="text-gray-400 text-sm mb-1">Total Page Views</p>
             <p class="text-3xl font-bold text-white">{{ number_format($totalViews) }}</p>
@@ -71,10 +71,6 @@
         <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
             <p class="text-gray-400 text-sm mb-1">Unique Visitors</p>
             <p class="text-3xl font-bold text-white">{{ number_format($uniqueVisitors) }}</p>
-        </div>
-        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <p class="text-gray-400 text-sm mb-1">Views Today</p>
-            <p class="text-3xl font-bold text-white">{{ number_format($viewsToday) }}</p>
         </div>
     </div>
 
