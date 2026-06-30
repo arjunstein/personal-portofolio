@@ -13,7 +13,7 @@ class Dashboard extends Component
 {
     public function render()
     {
-        $chartData = PageView::last7Days();
+        $chartData = PageView::thisWeek();
 
         return view('livewire.dashboard', [
             'totalProjects'    => Project::count(),

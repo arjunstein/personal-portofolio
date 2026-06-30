@@ -19,12 +19,18 @@ class PageView extends Model
         return static::distinct('ip_address')->count('ip_address');
     }
 
-    public static function last7Days(): array
+    public static function thisWeek(): array
     {
-        $days = collect(range(6, 0))->map(fn ($i) => now()->subDays($i)->format('Y-m-d'));
+        $monday = now()->startOfWeek(); // Monday
+        $today  = now()->startOfDay();
+
+        $days = collect();
+        for ($d = $monday->copy(); $d->lte($today); $d->addDay()) {
+            $days->push($d->format('Y-m-d'));
+        }
 
         $counts = static::selectRaw('DATE(created_at) as date, COUNT(*) as views')
-            ->where('created_at', '>=', now()->subDays(6)->startOfDay())
+            ->where('created_at', '>=', $monday)
             ->groupBy('date')
             ->pluck('views', 'date');
 

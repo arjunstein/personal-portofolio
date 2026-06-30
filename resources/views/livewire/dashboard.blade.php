@@ -75,7 +75,7 @@
     </div>
 
     <div class="bg-gray-800 rounded-lg border border-gray-700 p-6 mb-8">
-        <h2 class="text-xl font-semibold mb-4">Visitors (7 Days)</h2>
+        <h2 class="text-xl font-semibold mb-4">Visitors This Week</h2>
         <canvas id="visitorChart" height="80"></canvas>
     </div>
 
