@@ -6,6 +6,7 @@
     <title>Dashboard - Portfolio Admin</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body class="bg-gray-900 text-gray-100" x-data="{ sidebarOpen: false }">
     <!-- Mobile backdrop -->

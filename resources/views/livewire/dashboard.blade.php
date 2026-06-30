@@ -62,6 +62,47 @@
         </div>
     </div>
 
+    <!-- Analytics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <p class="text-gray-400 text-sm mb-1">Total Page Views</p>
+            <p class="text-3xl font-bold text-white">{{ number_format($totalViews) }}</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <p class="text-gray-400 text-sm mb-1">Unique Visitors</p>
+            <p class="text-3xl font-bold text-white">{{ number_format($uniqueVisitors) }}</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <p class="text-gray-400 text-sm mb-1">Views Today</p>
+            <p class="text-3xl font-bold text-white">{{ number_format($viewsToday) }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Chart 7 hari -->
+        <div class="lg:col-span-2 bg-gray-800 rounded-lg border border-gray-700 p-6">
+            <h2 class="text-xl font-semibold mb-4">Visitors (7 Days)</h2>
+            <canvas id="visitorChart" height="100"></canvas>
+        </div>
+
+        <!-- Top pages -->
+        <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
+            <h2 class="text-xl font-semibold mb-4">Top Pages</h2>
+            @if(count($topPages) > 0)
+            <div class="space-y-3">
+                @foreach($topPages as $page)
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-300 truncate mr-2">/{{ $page['path'] ?: '' }}</span>
+                    <span class="text-sm font-semibold text-purple-400 shrink-0">{{ number_format($page['views']) }}</span>
+                </div>
+                @endforeach
+            </div>
+            @else
+            <p class="text-gray-500 text-sm">No data yet</p>
+            @endif
+        </div>
+    </div>
+
     <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
         <h2 class="text-xl font-semibold mb-4">Recent Messages</h2>
         <!-- Desktop table -->
@@ -124,3 +165,42 @@
         </div>
     </div>
 </div>
+
+@script
+<script>
+    const ctx = document.getElementById('visitorChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! $chartLabels !!},
+                datasets: [{
+                    label: 'Page Views',
+                    data: {!! $chartViews !!},
+                    backgroundColor: 'rgba(139, 92, 246, 0.5)',
+                    borderColor: 'rgb(139, 92, 246)',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#9ca3af' },
+                        grid: { color: '#374151' },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#9ca3af', precision: 0 },
+                        grid: { color: '#374151' },
+                    },
+                },
+            },
+        });
+    }
+</script>
+@endscript

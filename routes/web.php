@@ -8,12 +8,13 @@ use App\Livewire\Messages;
 use App\Livewire\Profile;
 use App\Livewire\Account;
 use App\Livewire\Actions\Logout;
+use App\Http\Middleware\TrackPageView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->middleware(TrackPageView::class)->name('home');
 
 Route::post('/logout', function (Request $request, Logout $logout) {
     $logout();
