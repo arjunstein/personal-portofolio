@@ -16,7 +16,7 @@
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 md:relative md:inset-auto z-40 w-64 h-screen md:h-auto bg-gray-800 border-r border-gray-700 flex flex-col transition-transform duration-300 md:translate-x-0">
             <div class="p-6 border-b border-gray-700">
                 <h1 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                    Portfolio Admin
+                    {{ auth()->user()->name }}
                 </h1>
             </div>
             
@@ -132,7 +132,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
-                <span class="text-lg font-semibold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Portfolio Admin</span>
+                <span class="text-lg font-semibold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">{{ auth()->user()->name }}</span>
             </div>
             <div class="p-4 md:p-8">
                 {{ $slot }}
