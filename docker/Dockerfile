@@ -2,10 +2,13 @@ FROM php:8.3-fpm-bookworm
 
 # Set Environment Variables
 ENV DEBIAN_FRONTEND=noninteractive \
-    COMPOSER_ALLOW_SUPERUSER=1
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    NODE_ENV=development
 
-# Install System Dependencies and Build Libraries
+# Install System Packages, Nginx, Supervisor, and Build Libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    nginx \
+    supervisor \
     git \
     curl \
     libpng-dev \
@@ -33,26 +36,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Copy Custom PHP, OPcache, and FPM Pool Configurations
+# Copy Node.js 20 & NPM from official image
+COPY --from=node:20-bookworm-slim /usr/local /usr/local
+
+# Copy Composer 2 binary
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Copy Custom PHP & OPcache Configurations
 COPY docker/php/php.ini $PHP_INI_DIR/conf.d/99-custom.ini
 COPY docker/php/opcache.ini $PHP_INI_DIR/conf.d/opcache.ini
 COPY docker/php/fpm-pool.conf /usr/local/etc/php-fpm.d/zz-custom.conf
 
-# Copy Latest Composer Binary
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Copy Nginx Configuration and remove default site
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm -f /etc/nginx/sites-enabled/default
+
+# Copy Supervisord Configuration
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Create necessary directories for supervisor and nginx
+RUN mkdir -p /var/log/supervisor /var/run /run /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html
 
 # Set Working Directory
 WORKDIR /var/www/html
 
-# Ensure proper permissions for storage & bootstrap/cache
-RUN chown -R www-data:www-data /var/www/html
+# Expose HTTP (80) and Vite (5173) Ports
+EXPOSE 80 5173
 
-# Expose PHP-FPM Port
-EXPOSE 9000
+# Container Healthcheck (HTTP probe)
+HEALTHCHECK --interval=20s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://127.0.0.1:80/ || exit 1
 
-# Healthcheck to verify PHP-FPM process
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000 || exit 1
-
-# Start PHP-FPM
-CMD ["php-fpm", "-F"]
+# Start Supervisor to run both PHP-FPM and Nginx concurrently
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

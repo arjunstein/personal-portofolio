@@ -10,7 +10,7 @@ This document provides architectural context, development standards, Docker work
 - **Framework**: Laravel 12.x (PHP 8.3)
 - **Frontend / Reactivity**: Livewire 4.x, Livewire Volt, Alpine.js, Tailwind CSS v4
 - **Database**: SQLite (local/testing) & MySQL support
-- **Containerization**: Docker Compose (PHP-FPM 8.3 with OPcache & JIT, Nginx with Gzip & static caching, Node.js 20)
+- **Containerization**: **Unified Single Container** (PHP-FPM 8.3 with OPcache & JIT, Nginx with Gzip & static caching, Node.js 20, Supervisor process manager)
 - **Build Tool**: Vite 7.x
 
 ---
@@ -28,8 +28,9 @@ my-portfolio/
 │   ├── migrations/          # Schema definitions
 │   └── seeders/             # Initial demo data & admin credentials
 ├── docker/
-│   ├── Dockerfile           # Optimized PHP 8.3-FPM with OPcache & JIT
+│   ├── Dockerfile           # Unified PHP 8.3-FPM + Nginx + Node.js 20 + Supervisor image
 │   ├── nginx.conf           # Gzip compression, asset caching, security headers
+│   ├── supervisord.conf     # Process manager for PHP-FPM and Nginx
 │   └── php/                 # Custom php.ini, opcache.ini, fpm-pool.conf
 ├── resources/
 │   ├── css/app.css          # Tailwind CSS v4 design tokens, glassmorphism, fonts
@@ -44,7 +45,7 @@ my-portfolio/
 ├── tests/
 │   ├── Feature/             # Feature & authentication tests
 │   └── Unit/                # Unit test suite
-└── docker-compose.yml       # Container orchestration (app, nginx, node)
+└── docker-compose.yml       # Single unified container service (portfolio-app)
 ```
 
 ---
@@ -52,22 +53,23 @@ my-portfolio/
 ## 3. Docker & Execution Rules
 
 > [!IMPORTANT]
-> **Always run PHP, Composer, Artisan, and NPM commands using Docker Compose.**
-> Do not attempt to run `php` or `npm` directly on the host machine unless explicitly requested.
+> **Always run PHP, Artisan, and NPM commands inside the single container (`app`).**
+> All services (PHP-FPM, Nginx, Node.js) run inside this single unified container.
 
 ### Common Docker Commands
 
 | Action | Command |
 | :--- | :--- |
-| **Start Containers** | `docker compose up -d` |
-| **Rebuild Containers** | `docker compose up -d --build` |
+| **Start Container** | `docker compose up -d` |
+| **Rebuild Container** | `docker compose up -d --build` |
 | **Run Test Suite** | `docker compose exec app php artisan test` |
 | **Run Migrations** | `docker compose exec app php artisan migrate` |
 | **Run Seeders** | `docker compose exec app php artisan db:seed` |
-| **Build Frontend (Vite)** | `docker compose run --rm node npm run build` |
-| **Vite Dev Server** | `docker compose run --rm -p 5174:5173 node npm run dev` |
+| **Build Frontend (Vite)** | `docker compose exec app npm run build` |
+| **Vite Dev Server** | `docker compose exec app npm run dev -- --host` |
 | **Clear Laravel Cache** | `docker compose exec app php artisan optimize:clear` |
 | **Interactive Tinker** | `docker compose exec app php artisan tinker` |
+| **Container Status** | `docker compose ps` |
 
 ---
 
