@@ -7,7 +7,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="bg-[#080c14] text-slate-200 antialiased font-sans">
+    <livewire:layout.navigation />
     {{ $slot }}
     
     @livewireScripts

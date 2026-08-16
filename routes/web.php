@@ -22,6 +22,11 @@ Route::post('/logout', function (Request $request, Logout $logout) {
     return redirect()->route('home');
 })->middleware('auth')->name('logout');
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::view('/profile', 'profile')->name('profile');
+});
+
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', Dashboard::class)->name('index');
     
