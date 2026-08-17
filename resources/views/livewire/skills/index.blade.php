@@ -19,7 +19,17 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-2">Category</label>
-                    <input type="text" wire:model="category" placeholder="e.g. Frontend, Backend, DevOps" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
+                    @php
+                        $categoryOptions = collect(['Backend', 'Frontend', 'Database', 'DevOps', 'Tools', 'Design'])
+                            ->merge($categories)->unique()->sort()->values();
+                    @endphp
+                    <select wire:model="category" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
+                        <option value="">Select category</option>
+                        @foreach($categoryOptions as $option)
+                            <option value="{{ $option }}">{{ $option }}</option>
+                        @endforeach
+                    </select>
+                    @error('category') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
 
