@@ -574,10 +574,11 @@
                     </div>
 
                     <!-- Project Detail Dialog -->
-                    <dialog id="proj-{{ $project->id }}" class="project-dialog rounded-3xl bg-transparent backdrop:bg-black/70 backdrop:backdrop-blur-sm w-full max-w-2xl max-h-[85vh] p-0" aria-label="{{ $project->title }} details"
+                    <dialog id="proj-{{ $project->id }}" class="project-dialog fixed inset-0 m-auto w-full max-w-2xl p-0 bg-transparent border-0 backdrop:bg-black/70 backdrop:backdrop-blur-sm" aria-label="{{ $project->title }} details"
                             onclick="if(event.target===this)this.close()">
-                        <div class="glass-card rounded-3xl overflow-hidden border border-white/10 max-h-[85vh] overflow-y-auto">
-                            <div class="relative aspect-video w-full overflow-hidden bg-[#0d1424]">
+                        <div class="flex flex-col overflow-hidden rounded-3xl max-h-[85vh] bg-[#0f172a]/95 border border-white/10 shadow-2xl shadow-black/60 backdrop-blur-xl">
+                            <!-- Image (fixed, does not scroll) -->
+                            <div class="relative shrink-0 aspect-video w-full overflow-hidden bg-[#0d1424] border-b border-white/5">
                                 @if($project->image)
                                     <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
                                 @else
@@ -585,20 +586,22 @@
                                         <span class="font-display font-extrabold text-6xl text-purple-400/40">{{ substr($project->title, 0, 1) }}</span>
                                     </div>
                                 @endif
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-60 pointer-events-none"></div>
                                 <button onclick="this.closest('dialog').close()" aria-label="Close project details"
-                                        class="absolute top-3 right-3 p-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:bg-black/80 transition min-w-11 min-h-11 flex items-center justify-center">
+                                        class="absolute top-3 right-3 min-w-11 min-h-11 flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:bg-black/80 transition">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
                                 </button>
                             </div>
 
-                            <div class="p-6 sm:p-8">
-                                <h3 class="text-2xl font-display font-bold text-white mb-3">{{ $project->title }}</h3>
-                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line mb-6">{{ $project->description }}</p>
+                            <!-- Body (scrollable) -->
+                            <div class="overflow-y-auto overscroll-contain p-6 sm:p-8 [scrollbar-width:thin] [scrollbar-color:rgba(148,163,184,0.3)_transparent]">
+                                <h3 class="text-2xl font-display font-bold text-white mb-3 break-words">{{ $project->title }}</h3>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line break-words">{{ $project->description }}</p>
 
                                 @if($project->tech_stack)
-                                <div class="flex flex-wrap gap-1.5">
+                                <div class="flex flex-wrap gap-2 mt-6">
                                     @foreach($project->tech_stack as $tech)
                                     <span class="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 font-mono text-xs text-slate-300">{{ $tech }}</span>
                                     @endforeach

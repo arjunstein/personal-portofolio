@@ -223,6 +223,13 @@
   }
 }
 
+.project-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+}
+
 .project-dialog[open] {
   animation: dialog-pop 0.25s ease-out;
 }
