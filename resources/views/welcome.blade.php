@@ -520,7 +520,11 @@
                 @if($projects->isNotEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach($projects as $project)
-                    <div class="glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col justify-between group reveal" style="--reveal-delay: {{ 100 + ($loop->index * 60) }}ms;">
+                    <div class="glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col justify-between group reveal cursor-pointer"
+                         role="button" tabindex="0" aria-haspopup="dialog" aria-controls="proj-{{ $project->id }}"
+                         onclick="document.getElementById('proj-{{ $project->id }}').showModal()"
+                         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+                         style="--reveal-delay: {{ 100 + ($loop->index * 60) }}ms;">
                         <div>
                             <!-- Project Image Container -->
                             <div class="relative aspect-video w-full overflow-hidden bg-[#0d1424] border-b border-white/5">
@@ -568,6 +572,41 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Project Detail Dialog -->
+                    <dialog id="proj-{{ $project->id }}" class="project-dialog rounded-3xl bg-transparent backdrop:bg-black/70 backdrop:backdrop-blur-sm w-full max-w-2xl max-h-[85vh] p-0" aria-label="{{ $project->title }} details"
+                            onclick="if(event.target===this)this.close()">
+                        <div class="glass-card rounded-3xl overflow-hidden border border-white/10 max-h-[85vh] overflow-y-auto">
+                            <div class="relative aspect-video w-full overflow-hidden bg-[#0d1424]">
+                                @if($project->image)
+                                    <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full bg-gradient-to-br from-purple-900/40 via-indigo-900/30 to-[#080c14] flex items-center justify-center">
+                                        <span class="font-display font-extrabold text-6xl text-purple-400/40">{{ substr($project->title, 0, 1) }}</span>
+                                    </div>
+                                @endif
+                                <button onclick="this.closest('dialog').close()" aria-label="Close project details"
+                                        class="absolute top-3 right-3 p-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:bg-black/80 transition min-w-11 min-h-11 flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="p-6 sm:p-8">
+                                <h3 class="text-2xl font-display font-bold text-white mb-3">{{ $project->title }}</h3>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line mb-6">{{ $project->description }}</p>
+
+                                @if($project->tech_stack)
+                                <div class="flex flex-wrap gap-1.5">
+                                    @foreach($project->tech_stack as $tech)
+                                    <span class="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 font-mono text-xs text-slate-300">{{ $tech }}</span>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </dialog>
                     @endforeach
                 </div>
                 @else
