@@ -23,12 +23,17 @@
                         $categoryOptions = collect(['Backend', 'Frontend', 'Database', 'DevOps', 'Tools', 'Design'])
                             ->merge($categories)->unique()->sort()->values();
                     @endphp
-                    <select wire:model="category" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
-                        <option value="">Select category</option>
-                        @foreach($categoryOptions as $option)
-                            <option value="{{ $option }}">{{ $option }}</option>
-                        @endforeach
-                    </select>
+                    <div class="relative">
+                        <select wire:model="category" class="w-full appearance-none px-4 py-3 pr-11 bg-gray-900 border border-gray-700 rounded-lg text-gray-100 focus:ring-2 focus:ring-purple-500">
+                            <option value="">Select category</option>
+                            @foreach($categoryOptions as $option)
+                                <option value="{{ $option }}">{{ $option }}</option>
+                            @endforeach
+                        </select>
+                        <svg class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
                     @error('category') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
