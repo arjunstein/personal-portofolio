@@ -53,24 +53,24 @@
             <!-- Desktop Nav Links -->
             <div class="hidden md:flex items-center gap-1 bg-white/5 border border-white/5 rounded-full p-1">
                 <a href="#about" @click.prevent="scrollTo('about')" 
-                   :class="activeSection === 'about' ? 'bg-purple-600/30 text-white font-medium shadow-sm border border-purple-500/30' : 'text-slate-300 hover:text-white hover:bg-white/5'" 
-                   class="px-4 py-1.5 rounded-full text-sm transition-all duration-200">About</a>
+                   :class="activeSection === 'about' ? 'bg-purple-600/30 text-white border-purple-500/30 shadow-sm shadow-purple-600/20' : 'text-slate-300 border-transparent hover:text-white hover:bg-white/5'" 
+                   class="px-4 py-1.5 rounded-full text-sm border font-medium transition-colors duration-300 ease-out">About</a>
                 
                 <a href="#skills" @click.prevent="scrollTo('skills')" 
-                   :class="activeSection === 'skills' ? 'bg-purple-600/30 text-white font-medium shadow-sm border border-purple-500/30' : 'text-slate-300 hover:text-white hover:bg-white/5'" 
-                   class="px-4 py-1.5 rounded-full text-sm transition-all duration-200">Skills</a>
+                   :class="activeSection === 'skills' ? 'bg-purple-600/30 text-white border-purple-500/30 shadow-sm shadow-purple-600/20' : 'text-slate-300 border-transparent hover:text-white hover:bg-white/5'" 
+                   class="px-4 py-1.5 rounded-full text-sm border font-medium transition-colors duration-300 ease-out">Skills</a>
                 
                 <a href="#experiences" @click.prevent="scrollTo('experiences')" 
-                   :class="activeSection === 'experiences' ? 'bg-purple-600/30 text-white font-medium shadow-sm border border-purple-500/30' : 'text-slate-300 hover:text-white hover:bg-white/5'" 
-                   class="px-4 py-1.5 rounded-full text-sm transition-all duration-200">Experience</a>
+                   :class="activeSection === 'experiences' ? 'bg-purple-600/30 text-white border-purple-500/30 shadow-sm shadow-purple-600/20' : 'text-slate-300 border-transparent hover:text-white hover:bg-white/5'" 
+                   class="px-4 py-1.5 rounded-full text-sm border font-medium transition-colors duration-300 ease-out">Experience</a>
                 
                 <a href="#projects" @click.prevent="scrollTo('projects')" 
-                   :class="activeSection === 'projects' ? 'bg-purple-600/30 text-white font-medium shadow-sm border border-purple-500/30' : 'text-slate-300 hover:text-white hover:bg-white/5'" 
-                   class="px-4 py-1.5 rounded-full text-sm transition-all duration-200">Projects</a>
+                   :class="activeSection === 'projects' ? 'bg-purple-600/30 text-white border-purple-500/30 shadow-sm shadow-purple-600/20' : 'text-slate-300 border-transparent hover:text-white hover:bg-white/5'" 
+                   class="px-4 py-1.5 rounded-full text-sm border font-medium transition-colors duration-300 ease-out">Projects</a>
                 
                 <a href="#contact" @click.prevent="scrollTo('contact')" 
-                   :class="activeSection === 'contact' ? 'bg-purple-600/30 text-white font-medium shadow-sm border border-purple-500/30' : 'text-slate-300 hover:text-white hover:bg-white/5'" 
-                   class="px-4 py-1.5 rounded-full text-sm transition-all duration-200">Contact</a>
+                   :class="activeSection === 'contact' ? 'bg-purple-600/30 text-white border-purple-500/30 shadow-sm shadow-purple-600/20' : 'text-slate-300 border-transparent hover:text-white hover:bg-white/5'" 
+                   class="px-4 py-1.5 rounded-full text-sm border font-medium transition-colors duration-300 ease-out">Contact</a>
             </div>
 
             <!-- Right Action & Mobile Toggle -->
@@ -116,31 +116,31 @@
             <div class="flex flex-col gap-2 mt-6">
                 <a href="#about" @click.prevent="scrollTo('about'); mobileMenuOpen = false" 
                    :class="activeSection === 'about' ? 'bg-purple-600/20 text-purple-300 border-purple-500/30' : 'text-slate-300 hover:bg-white/5 border-transparent'" 
-                   class="px-4 py-3 rounded-xl border transition flex items-center justify-between font-medium">
+                   class="px-4 py-3 rounded-xl border transition-colors duration-300 ease-out flex items-center justify-between font-medium">
                     <span>About</span>
                     <span class="font-mono text-xs text-slate-500">01</span>
                 </a>
                 <a href="#skills" @click.prevent="scrollTo('skills'); mobileMenuOpen = false" 
                    :class="activeSection === 'skills' ? 'bg-purple-600/20 text-purple-300 border-purple-500/30' : 'text-slate-300 hover:bg-white/5 border-transparent'" 
-                   class="px-4 py-3 rounded-xl border transition flex items-center justify-between font-medium">
+                   class="px-4 py-3 rounded-xl border transition-colors duration-300 ease-out flex items-center justify-between font-medium">
                     <span>Skills</span>
                     <span class="font-mono text-xs text-slate-500">02</span>
                 </a>
                 <a href="#experiences" @click.prevent="scrollTo('experiences'); mobileMenuOpen = false" 
                    :class="activeSection === 'experiences' ? 'bg-purple-600/20 text-purple-300 border-purple-500/30' : 'text-slate-300 hover:bg-white/5 border-transparent'" 
-                   class="px-4 py-3 rounded-xl border transition flex items-center justify-between font-medium">
+                   class="px-4 py-3 rounded-xl border transition-colors duration-300 ease-out flex items-center justify-between font-medium">
                     <span>Experience</span>
                     <span class="font-mono text-xs text-slate-500">03</span>
                 </a>
                 <a href="#projects" @click.prevent="scrollTo('projects'); mobileMenuOpen = false" 
                    :class="activeSection === 'projects' ? 'bg-purple-600/20 text-purple-300 border-purple-500/30' : 'text-slate-300 hover:bg-white/5 border-transparent'" 
-                   class="px-4 py-3 rounded-xl border transition flex items-center justify-between font-medium">
+                   class="px-4 py-3 rounded-xl border transition-colors duration-300 ease-out flex items-center justify-between font-medium">
                     <span>Projects</span>
                     <span class="font-mono text-xs text-slate-500">04</span>
                 </a>
                 <a href="#contact" @click.prevent="scrollTo('contact'); mobileMenuOpen = false" 
                    :class="activeSection === 'contact' ? 'bg-purple-600/20 text-purple-300 border-purple-500/30' : 'text-slate-300 hover:bg-white/5 border-transparent'" 
-                   class="px-4 py-3 rounded-xl border transition flex items-center justify-between font-medium">
+                   class="px-4 py-3 rounded-xl border transition-colors duration-300 ease-out flex items-center justify-between font-medium">
                     <span>Contact</span>
                     <span class="font-mono text-xs text-slate-500">05</span>
                 </a>
@@ -234,7 +234,7 @@
                 </div>
 
                 <!-- Bento Box Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     
                     <!-- Bento Card 1: Main Story & Profile (Spans 2 cols) -->
                     <div class="md:col-span-2 glass-card glass-card-hover rounded-3xl p-8 sm:p-10 flex flex-col justify-between reveal" style="--reveal-delay: 120ms;">
@@ -399,7 +399,7 @@
                 </div>
 
                 @if($skills->isNotEmpty())
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach($skills as $category => $categorySkills)
                     <div class="glass-card glass-card-hover rounded-3xl p-8 flex flex-col justify-between reveal" style="--reveal-delay: {{ 100 + ($loop->index * 40) }}ms;">
                         <div>
@@ -544,7 +544,7 @@
                             </div>
 
                             <!-- Card Body -->
-                            <div class="p-6 sm:p-7">
+                            <div class="p-6 sm:p-8">
                                 <h3 class="text-xl font-display font-bold text-white mb-2.5 group-hover:text-purple-300 transition flex items-center justify-between">
                                     <span>{{ $project->title }}</span>
                                     <svg class="w-4 h-4 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -557,7 +557,7 @@
                                 </p>
 
                                 @if($project->tech_stack)
-                                <div class="flex flex-wrap gap-1.5 mb-6">
+                                <div class="flex flex-wrap gap-1.5">
                                     @foreach($project->tech_stack as $tech)
                                     <span class="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 font-mono text-xs text-slate-300">
                                         {{ $tech }}
@@ -589,59 +589,13 @@
                     <p class="text-slate-400 text-base max-w-2xl mx-auto mt-4">Have an inquiry, project proposal, or looking to collaborate? Drop me a line below.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    
-                    <!-- Left Column: Contact Channels & Info -->
-                    <div class="lg:col-span-5 space-y-6 reveal" style="--reveal-delay: 120ms;">
-                        <div class="glass-card rounded-3xl p-8">
-                            <h3 class="text-xl font-display font-bold text-white mb-3">Direct Channels</h3>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Feel free to reach out via direct message or through the contact form. I typically respond within 24 hours.</p>
-
-                            <div class="space-y-4">
-                                @if($profile?->email)
-                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-purple-500/30 transition group">
-                                    <div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <p class="text-xs text-slate-500 font-mono uppercase">Email Address</p>
-                                        <a href="mailto:{{ $profile->email }}" class="text-sm font-medium text-slate-200 hover:text-purple-300 transition truncate block">
-                                            {{ $profile->email }}
-                                        </a>
-                                    </div>
-                                </div>
-                                @endif
-
-                                @if($profile?->location)
-                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/5">
-                                    <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-slate-500 font-mono uppercase">Location</p>
-                                        <p class="text-sm font-medium text-slate-200">{{ $profile->location }}</p>
-                                    </div>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
+                <div class="reveal" style="--reveal-delay: 140ms;">
+                    <div class="max-w-2xl mx-auto glass-card rounded-3xl p-8 sm:p-10 border border-white/10 shadow-2xl">
+                        <h3 class="text-2xl font-display font-bold text-white mb-2">Send a Message</h3>
+                        <p class="text-slate-400 text-sm mb-8">Fill in the fields below and I'll get back to you promptly.</p>
+                        
+                        <livewire:contact-form />
                     </div>
-
-                    <!-- Right Column: Livewire Contact Form -->
-                    <div class="lg:col-span-7 reveal" style="--reveal-delay: 140ms;">
-                        <div class="glass-card rounded-3xl p-8 sm:p-10 border border-white/10 shadow-2xl">
-                            <h3 class="text-2xl font-display font-bold text-white mb-2">Send a Message</h3>
-                            <p class="text-slate-400 text-sm mb-8">Fill in the fields below and I'll get back to you promptly.</p>
-                            
-                            <livewire:contact-form />
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -736,18 +690,44 @@
                 activeSection: 'hero',
                 mobileMenuOpen: false,
                 init() {
-                    const observer = new IntersectionObserver(entries => {
+                    const revealObserver = new IntersectionObserver(entries => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
-                                this.activeSection = entry.target.id;
                                 entry.target.classList.add('is-visible');
                             }
                         });
-                    }, { threshold: 0.2 });
-                    
-                    document.querySelectorAll('section[id], .reveal').forEach(el => {
-                        observer.observe(el);
-                    });
+                    }, { threshold: 0.15 });
+
+                    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+                    this.updateActiveSection();
+                    window.addEventListener('scroll', () => {
+                        if (this._scrollTicking) return;
+                        this._scrollTicking = true;
+                        requestAnimationFrame(() => {
+                            this.updateActiveSection();
+                            this._scrollTicking = false;
+                        });
+                    }, { passive: true });
+                    window.addEventListener('resize', () => this.updateActiveSection());
+                },
+                updateActiveSection() {
+                    const sections = [...document.querySelectorAll('section[id]')];
+                    const probe = window.innerHeight * 0.35;
+                    let current = sections[0]?.id ?? 'hero';
+
+                    for (const section of sections) {
+                        if (section.getBoundingClientRect().top <= probe) {
+                            current = section.id;
+                        }
+                    }
+
+                    const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+                    if (isAtBottom) {
+                        current = sections[sections.length - 1].id;
+                    }
+
+                    this.activeSection = current;
                 },
                 scrollTo(id) {
                     const el = document.getElementById(id);
